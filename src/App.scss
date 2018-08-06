@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide|Palanquin+Dark|Source+Code+Pro|Space+Mono');
+@font-face {
+  font-family: "Neon";
+  src: url("https://res.cloudinary.com/totallycurious/raw/upload/v1533495233/Fonts/NEON____.TTF") format("truetype");
+}
+
+body {
+  background-color: black;
+}
+
+main {
+  text-align: center;
+}
+
+App {
+  width: 1200px;;
+  height: 100%;
+}
+
+.container {
+  width:1200px;
+}
+
+.title {
+  text-align: center;
+  margin: 0 auto;
+}
+.board{
+  display: flex;
+  flex-direction: row;
+}
+.box{
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  text-align:  center;
+  width: 640px;
+  border-radius:18px;
+  background-color: rgb(40, 40, 70);
+  border:8px solid white;
+  box-shadow:0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080, 0 0 55px #ff0080, 0 0 75px #ff0080, inset 0 0 5px #fff, inset 0 0 10px #fff,inset  0 0 20px #ff0080, inset 0 0 30px #ff0080, inset 0 0 40px #ff0080, inset 0 0 55px #ff0080, inset 0 0 75px #ff0080;
+}
+
+h1 {
+  margin-bottom: -38px;
+  font-family: "Neon", sans-serif;
+  font-size: 8em;
+  font-weight: 100;
+  color: #FFF;
+  text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00FFFF, 0 0 55px #00FFFF, 0 0 75px #00FFFF;
+}
+.controls{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  width:260px;
+  height:300px;
+
+}
+.control{
+  
+}
+.pad-holder {
+  width:340px;
+  height: 340px;
+  //background-position: center;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  position: static;
+
+  //background-color: black;
+  // border-radius: 5px;
+  // border: 5px solid magenta;
+}
+
+.pads {
+  background-position: center;
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  color: magenta;
+  background-color:rgb(40, 40, 100);
+  font-size: 2em;
+  border-radius: 20px;
+  border: 5px solid #fff;
+  color: #FFF;
+  box-shadow:0 0 5px #fff, 0 0 10px #fff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff,0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080, 0 0 55px #ff0080, 0 0 75px #ff0080;
+}
+
+.pads p {
+  font-family: 'Audiowide', cursive;
+  font-size: 1.5em;
+  margin: 0;
+  position: relative;
+  border-radius: 8px;
+  //border:8px solid white;
+
+  //  top: 20%;
+  //transform: translateY(-50%);
+}
