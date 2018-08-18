@@ -2,44 +2,35 @@ import React, { Component } from 'react';
 import './App.css';
 
 const P_START = '_ _ _ _ ';
+const URL_BANK = ["https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657707/drum-machine/kick.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254303/drum-machine/la-native.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657707/drum-machine/snare.wav",
+"http://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254303/drum-machine/dash-runner.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657707/drum-machine/cowbell.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254302/drum-machine/retro-2.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657707/drum-machine/hihat1.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254300/drum-machine/detective.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657707/drum-machine/cymbal.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254300/drum-machine/fast-ace.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657706/drum-machine/tomtom.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254298/drum-machine/arcade-funk.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657706/drum-machine/hihat4.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254303/drum-machine/retro-gap.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657708/drum-machine/china.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254299/drum-machine/androids.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1533657707/drum-machine/ride.wav",
+"https://res.cloudinary.com/totallycurious/video/upload/q_10/v1534254297/drum-machine/ducky.wav"]
 const BANK_DATA = {
-                "Q":['KICK',"https://res.cloudinary.com/totallycurious/video/upload/v1533657707/drum-machine/kick.mp3",
-                      
-                  'LA-NATIVE', "https://res.cloudinary.com/totallycurious/video/upload/v1534254303/drum-machine/la-native.wav"], 
-
-                "W":['SNARE',"https://res.cloudinary.com/totallycurious/video/upload/v1533657707/drum-machine/snare.mp3",
-                      
-                  'DASH-RUNNER', "https://res.cloudinary.com/totallycurious/video/upload/v1534254303/drum-machine/dash-runner.wav"],
-
-                "E":['COWBELL',"https://res.cloudinary.com/totallycurious/video/upload/v1533657707/drum-machine/cowbell.mp3",
-                      
-                  'RETRO-2', "https://res.cloudinary.com/totallycurious/video/upload/v1534254302/drum-machine/retro-2.wav"],
-
-                 "A":['HIHAT1',"https://res.cloudinary.com/totallycurious/video/upload/v1533657707/drum-machine/hihat1.mp3",
-                      
-                   'DETECTIVE', "https://res.cloudinary.com/totallycurious/video/upload/v1534254300/drum-machine/detective.wav"], 
-
-                "S":['CYMBAL', "https://res.cloudinary.com/totallycurious/video/upload/v1533657707/drum-machine/cymbal.mp3",
-                      
-                  'FAST-ACE', "https://res.cloudinary.com/totallycurious/video/upload/v1534254300/drum-machine/fast-ace.wav"],
- 
-                "D":['TOMTOM', "https://res.cloudinary.com/totallycurious/video/upload/v1533657706/drum-machine/tomtom.mp3",
-                      
-                  'ARCADE-FUNK', "https://res.cloudinary.com/totallycurious/video/upload/v1534254298/drum-machine/arcade-funk.mp3"],
-
-                "Z":['HIHAT4', "https://res.cloudinary.com/totallycurious/video/upload/v1533657706/drum-machine/hihat4.mp3",
-                      
-                  'RETRO-GAP', "https://res.cloudinary.com/totallycurious/video/upload/v1534254303/drum-machine/retro-gap.wav"], 
-
-                "X":['CHINA', "https://res.cloudinary.com/totallycurious/video/upload/v1533657708/drum-machine/china.mp3",
-                      
-                  'ANDROIDS', "https://res.cloudinary.com/totallycurious/video/upload/v1534254299/drum-machine/androids.wav"],
- 
-                "C":['RIDE', "https://res.cloudinary.com/totallycurious/video/upload/v1533657707/drum-machine/ride.mp3",
-                      
-                  'DUCKY', "https://res.cloudinary.com/totallycurious/video/upload/v1534254297/drum-machine/ducky.mp3"],
-
-}; 
+  Q: ["KICK", "LA-NATIVE"],
+  W: ["SNARE", "DASH-RUNNER"],
+  E: ["COWBELL", "RETRO-2"],
+  A: ["HIHAT1", "DETECTIVE"],
+  S: ["CYMBAL", "FAST-ACE"],
+  D: ["TOMTOM", "ARCADE-FUNK"],
+  Z: ["HIHAT4", "RETRO-GAP"],
+  X: ["CHINA", "ANDROIDS"],
+  C: ["RIDE", "DUCKY"]
+} 
 class App extends Component {
   constructor(props){
     super(props);
@@ -48,7 +39,8 @@ class App extends Component {
       volume:50,
       bankOn:false,
       display:'START',
-      audioUrl:'',
+      audioUrl:URL_BANK,
+      audioFlag:false,
     }
   this.handleVolumeChange = this.handleVolumeChange.bind(this);
   this.handlePowerToggle = this.handlePowerToggle.bind(this);
@@ -84,8 +76,6 @@ class App extends Component {
     }
   }
   handlePadSmash(e){
-    console.log(BANK_DATA[e.currentTarget.id][1]);
-    console.log(e.currentTarget.id);
     if(this.state.isActive){
       this.updateDisplay(e.currentTarget.id);
       this.playAudio(e.currentTarget.id);
@@ -95,13 +85,8 @@ class App extends Component {
     
   }
   playAudio(id){
-    console.log(id);
     const audio = document.getElementById(id+"-audio");
-    this.setState({
-      audioUrl: BANK_DATA[id][1]
-    })
-    //const audio = document.getElementById("temp-audio");
-    //audio.currentTime=0;
+    audio.currentTime=0;
     audio.play();
   }
   handleVolumeChange(props){
@@ -117,15 +102,21 @@ class App extends Component {
     }
     else if(this.state.bankOn){
       this.setState({
-        display: BANK_DATA[id][2]
+        display: BANK_DATA[id][1]
       })
     }
   }
   componentWillMount(){
     this.handleVolumeChange(50);
   }
-  
   render() {
+    var pads = [];
+    for(var i=0;i<9;i++){
+      pads.push(<li className="pads" id={Object.keys(BANK_DATA)[i]} onClick={this.handlePadSmash}>
+          <audio id={Object.keys(BANK_DATA)[i] + "-audio"} src={!this.state.bankOn ? this.state.audioUrl[i * 2] : this.state.audioUrl[(i * 2) + 1]} className="clip" />
+          <p>{Object.keys(BANK_DATA)[i]}</p>
+        </li>);
+    }
     return <div className="App">
         <div className="container">
           <div className="title">
@@ -133,42 +124,7 @@ class App extends Component {
           </div>
           <div className="box">
             <ul className="pad-holder">
-              <li className="pads" id="Q" onClick={this.handlePadSmash}>
-                <audio id="Q-audio" src={this.state.audioUrl} className="clip" />
-                <p>Q</p>
-              </li>
-              <li className="pads" id="W" onClick={this.handlePadSmash}>
-              <audio id="W-audio" src={this.state.audioUrl} className="clip" />
-                <p>W</p>
-              </li>
-              <li className="pads" id="E" onClick={this.handlePadSmash}>
-              <audio id="E-audio" src={this.state.audioUrl} className="clip" />
-                <p>E</p>
-              </li>
-              <li className="pads" id="A" onClick={this.handlePadSmash}>
-              <audio id="A-audio" src={this.state.audioUrl} className="clip" />
-                <p>A</p>
-              </li>
-              <li className="pads" id="S" onClick={this.handlePadSmash}>
-                <audio id="S-audio" src={this.state.audioUrl} className="clip" />
-                <p>S</p>
-              </li>
-              <li className="pads" id="D" onClick={this.handlePadSmash}>
-                <audio id="D-audio" src={this.state.audioUrl} className="clip" />
-                <p>D</p>
-              </li>
-              <li className="pads" id="Z" onClick={this.handlePadSmash}>
-                <audio id="Z-audio" src={this.state.audioUrl} className="clip" />
-                <p>Z</p>
-              </li>
-              <li className="pads" id="X" onClick={this.handlePadSmash}>
-                <audio id="X-audio" src={this.state.audioUrl} className="clip" />
-                <p>X</p>
-              </li>
-              <li className="pads" id="C" onClick={this.handlePadSmash}>
-                <audio id="C-audio" src={this.state.audioUrl} className="clip" />
-                <p>C</p>
-              </li>
+              {pads}
             </ul>
             <div className="controls">
               <div className="control" id="display">
@@ -220,7 +176,7 @@ class DrumPads extends Component{
   }
   render(){
     return{
-      
+
     }
   }
 }
