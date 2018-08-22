@@ -31,12 +31,14 @@ const BANK_DATA = {
   X: ["CHINA", "ANDROIDS"],
   C: ["RIDE", "DUCKY"]
 } 
+const KEY_CODES = {81:'Q',87:'W',69:'E',65:'A',83:'S',68:'D',90:'Z',88:'X',67:'C'}
+
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
       isActive:true,
-      volume:0.5,
+      volume:5,
       bankOn:false,
       display:'START',
       audioUrl:URL_BANK,
@@ -79,26 +81,21 @@ class App extends Component {
   handlePadSmash(e){
     if(this.state.isActive){
       var myId = e.currentTarget.id.split('-')[0];
-      // console.log(e.currentTarget.id.split('-')[0]);
       this.updateDisplay(myId);
       this.playAudio(myId);
     }
-    
   }
   handleKeyPress(e){
-    if (Object.keys(BANK_DATA).includes(e.key.toUpperCase())){
-      this.playAudio(e.key.toUpperCase());
-      this.updateDisplay(e.key.toUpperCase());
+    if (Object.keys(KEY_CODES).includes(e.keyCode.toString())){
+      this.playAudio(KEY_CODES[e.keyCode]);
+      this.updateDisplay(KEY_CODES[e.keyCode]);
     }
   }
   playAudio(id){
-    // console.log(id);
     const audio = document.getElementById(id);
     audio.currentTime=0;
-    // audio.volume=parseFloat(this.state.volume/10);
-    console.log("1",this.state.volume);
+    // audio.volume = 0.5;
     audio.play();
-    console.log("2",this.state.volume);
   }
   handleVolumeChange(props){
     this.setState({
@@ -118,8 +115,7 @@ class App extends Component {
     }
   }
   componentWillMount(){
-    this.handleVolumeChange(0.1);
-    console.log(parseFloat(this.state.volume/10));
+    this.handleVolumeChange(5);
     const script = document.createElement("script");
     script.src = "https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js";
     script.async = true;
@@ -135,7 +131,7 @@ class App extends Component {
     var pads = [];
     for(var i=0;i<9;i++){
       pads.push(<li className="pads drum-pad" id={Object.keys(BANK_DATA)[i] + "-audio"} onClick={this.handlePadSmash}>
-          <audio volume={this.state.volume} id={Object.keys(BANK_DATA)[i]} src={!this.state.bankOn ? this.state.audioUrl[i * 2] : this.state.audioUrl[(i * 2) + 1]} className="clip" />
+          <audio volume={this.state.volume/10} id={Object.keys(BANK_DATA)[i]} src={!this.state.bankOn ? this.state.audioUrl[i * 2] : this.state.audioUrl[(i * 2) + 1]} className="clip" />
           <p>{Object.keys(BANK_DATA)[i]}</p>
         </li>);
     }
