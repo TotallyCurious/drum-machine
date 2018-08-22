@@ -38,7 +38,7 @@ class App extends Component {
     super(props);
     this.state={
       isActive:true,
-      volume:5,
+      volume:'',
       bankOn:false,
       display:'START',
       audioUrl:URL_BANK,
@@ -94,12 +94,12 @@ class App extends Component {
   playAudio(id){
     const audio = document.getElementById(id);
     audio.currentTime=0;
-    // audio.volume = 0.5;
     audio.play();
   }
-  handleVolumeChange(props){
+  handleVolumeChange(e){
+    console.log(e);
     this.setState({
-      volume:props.value,
+      volume:e.value,
     })
   }
   updateDisplay(id){
@@ -154,7 +154,7 @@ class App extends Component {
                 </p>
               </div>
               <div className="control" id="volume">
-                <input type="range" min="0" max="10" value={this.state.volume} className="slider" id="myRange" onChange={this.handleVolumeChange} />
+                <input type="range" min="0" max="10" value={this.state.volume} className="slider" id="myRange" onChange={(e)=> {this.handleVolumeChange(e)}} />
               </div>
               <div className="button-container control">
                 <div className="control" id="power">
@@ -188,15 +188,4 @@ class App extends Component {
       </div>;
   }
 }
-// class DrumPads extends Component{
-//   constructor(props){
-//     super(props);
-//   }
-//   render(){
-//     return{
-
-//     }
-//   }
-// }
-
 export default App;
