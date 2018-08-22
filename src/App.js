@@ -36,7 +36,7 @@ class App extends Component {
     super(props);
     this.state={
       isActive:true,
-      volume:50,
+      volume:0.5,
       bankOn:false,
       display:'START',
       audioUrl:URL_BANK,
@@ -47,7 +47,8 @@ class App extends Component {
   this.handleBankToggle = this.handleBankToggle.bind(this);
   this.updateDisplay = this.updateDisplay.bind(this);
   this.handlePadSmash = this.handlePadSmash.bind(this);
-  this.playAudio = this.playAudio.bind(this)
+  this.playAudio = this.playAudio.bind(this);
+  this.handleKeyPress = this.handleKeyPress.bind(this);
   }
   handlePowerToggle(){
     const currentState = this.state.isActive;
@@ -77,17 +78,27 @@ class App extends Component {
   }
   handlePadSmash(e){
     if(this.state.isActive){
-      this.updateDisplay(e.currentTarget.id);
-      this.playAudio(e.currentTarget.id);
-      //play corresponding audio
-      //  --
+      var myId = e.currentTarget.id.split('-')[0];
+      // console.log(e.currentTarget.id.split('-')[0]);
+      this.updateDisplay(myId);
+      this.playAudio(myId);
     }
     
   }
+  handleKeyPress(e){
+    if (Object.keys(BANK_DATA).includes(e.key.toUpperCase())){
+      this.playAudio(e.key.toUpperCase());
+      this.updateDisplay(e.key.toUpperCase());
+    }
+  }
   playAudio(id){
-    const audio = document.getElementById(id+"-audio");
+    // console.log(id);
+    const audio = document.getElementById(id);
     audio.currentTime=0;
+    // audio.volume=parseFloat(this.state.volume/10);
+    console.log("1",this.state.volume);
     audio.play();
+    console.log("2",this.state.volume);
   }
   handleVolumeChange(props){
     this.setState({
@@ -107,13 +118,24 @@ class App extends Component {
     }
   }
   componentWillMount(){
-    this.handleVolumeChange(50);
+    this.handleVolumeChange(0.1);
+    console.log(parseFloat(this.state.volume/10));
+    const script = document.createElement("script");
+    script.src = "https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress);
   }
   render() {
     var pads = [];
     for(var i=0;i<9;i++){
-      pads.push(<li className="pads" id={Object.keys(BANK_DATA)[i]} onClick={this.handlePadSmash}>
-          <audio id={Object.keys(BANK_DATA)[i] + "-audio"} src={!this.state.bankOn ? this.state.audioUrl[i * 2] : this.state.audioUrl[(i * 2) + 1]} className="clip" />
+      pads.push(<li className="pads drum-pad" id={Object.keys(BANK_DATA)[i] + "-audio"} onClick={this.handlePadSmash}>
+          <audio volume={this.state.volume} id={Object.keys(BANK_DATA)[i]} src={!this.state.bankOn ? this.state.audioUrl[i * 2] : this.state.audioUrl[(i * 2) + 1]} className="clip" />
           <p>{Object.keys(BANK_DATA)[i]}</p>
         </li>);
     }
@@ -123,10 +145,10 @@ class App extends Component {
             <h1>Drum-Kit</h1>
           </div>
           <div className="box">
-            <ul className="pad-holder">
+            <ul className="pad-holder" onKeyPress={this.handleKeyPress}>
               {pads}
             </ul>
-            <div className="controls">
+            <div className="controls" id="drum-machine">
               <div className="control" id="display">
                 <p className="display-text" id="display-primary">
                   {this.state.display}
@@ -136,14 +158,14 @@ class App extends Component {
                 </p>
               </div>
               <div className="control" id="volume">
-                <input type="range" min="1" max="100" value={this.state.volume} className="slider" id="myRange" onChange={this.handleVolumeChange} />
+                <input type="range" min="0" max="10" value={this.state.volume} className="slider" id="myRange" onChange={this.handleVolumeChange} />
               </div>
               <div className="button-container control">
                 <div className="control" id="power">
                   <div className="power-element" id="power-on-indicator">
                     <em>ON</em>
                   </div>
-
+                  
                   <div className="power-element" id="power-switch" onClick={this.handlePowerToggle}>
                     <div id="power-knob" className={this.state.isActive ? null : "power-on"} />
                   </div>
@@ -170,15 +192,15 @@ class App extends Component {
       </div>;
   }
 }
-class DrumPads extends Component{
-  constructor(props){
-    super(props);
-  }
-  render(){
-    return{
+// class DrumPads extends Component{
+//   constructor(props){
+//     super(props);
+//   }
+//   render(){
+//     return{
 
-    }
-  }
-}
+//     }
+//   }
+// }
 
 export default App;
